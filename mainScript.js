@@ -12,6 +12,19 @@ for(let row = 0; row < 16; row++) {
     for(let j = 0; j < 16; j++) {
         let pixel = document.createElement('div');
         pixel.classList.add("pixel");
+
+        pixel.addEventListener('mouseenter', function(e) {
+            //console.log("MOUSE ENTER: ");
+            //console.log(e);
+            pixel.style.backgroundColor = "pink";
+        });
+
+        pixel.addEventListener('mouseleave', function(e) {
+            //console.log("MOUSE LEAVE: ");
+            //console.log(e);
+            pixel.style.backgroundColor = "white";
+        });
+    
         rowDiv.appendChild(pixel);
     }
 
