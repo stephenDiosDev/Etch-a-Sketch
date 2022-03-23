@@ -31,3 +31,12 @@ for(let row = 0; row < 16; row++) {
     //now that rowDiv is full, add to document
     sketchpad.appendChild(rowDiv);
 }
+
+/*
+    TODO
+        [] Button to clear colour on grid
+        [] Button to make a new grid of size 1 to 100 (1x1 to 100x100)
+        [] RGB colour selector that changes drawable colour
+        [] Make a grid that does not resize
+            - Ideally it can grow evenly up, but cannot shrink past a certain size 
+*/
