@@ -1,6 +1,5 @@
-console.log("Hello, World!");
-
 let sketchpad = document.querySelector(".sketchpad");
+let mouseCurrentlyDown = false;
 
 addGrid(sketchpad, 16);
 
@@ -34,7 +33,7 @@ function clearGrid() {
         });
     }
 
-    newGrid(sketchpad, prompt("Enter a new grid width between 0 and 100", 10));
+    newGrid(sketchpad, prompt("Enter a new grid width between 0 and 100", 16));
 }
 
 function newGrid(sketchpad, size) {
@@ -64,13 +63,30 @@ function addGrid(gridElement, size) {
         for(let j = 0; j < size; j++) {
             let pixel = document.createElement('div');
             pixel.classList.add("pixel");
+            pixel.style.backgroundColor = "white";
+
+            let pixelOriginalColour = document.createElement('div');
+            pixelOriginalColour.style.backgroundColor = "white";
+            pixel.appendChild(pixelOriginalColour);
     
             pixel.addEventListener('mouseenter', function(e) {
                 pixel.style.backgroundColor = "pink";
+                if(mouseCurrentlyDown) {
+                    draw(pixel, pixelOriginalColour);
+                }
             });
     
             pixel.addEventListener('mouseleave', function(e) {
-                pixel.style.backgroundColor = "white";
+                pixel.style.backgroundColor = pixelOriginalColour.style.backgroundColor;
+            });
+
+            pixel.addEventListener('mousedown', function(e) {
+                mouseCurrentlyDown = true;
+                draw(pixel, pixelOriginalColour);
+            });
+
+            pixel.addEventListener('mouseup', function(e) {
+                mouseCurrentlyDown = false;
             });
         
             rowDiv.appendChild(pixel);
@@ -81,13 +97,8 @@ function addGrid(gridElement, size) {
     }
 }
 
-/*
-    TODO
-        [X] Button to clear colour on grid
-        [] Button to make a new grid of size 1 to 100 (1x1 to 100x100)
-        [] RGB colour selector that changes drawable colour
-        [] Make a grid that does not resize
-            - Ideally it can grow evenly up, but cannot shrink past a certain size 
-            - The details page does mention a 960px width and 960px height, so we 
-                can just make a hardcoded height and width
-*/
+function draw(pixel, originalColour) {
+    let colourPickBtn = document.querySelector(".colour-picker");
+    pixel.style.backgroundColor = colourPickBtn.value;
+    originalColour.style.backgroundColor = colourPickBtn.value;
+}
